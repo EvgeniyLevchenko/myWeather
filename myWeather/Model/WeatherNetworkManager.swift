@@ -7,8 +7,9 @@
 
 import Foundation
 
-class NetworkManager {
-    let resourceURL: URL
+class WeatherNetworkManager {
+    
+    var resourceURL: URL
     let API_KEY = "7bc232b849cf4051b71200807222001"
     
     init(locationName: String, forecastDays: Int) {
@@ -18,7 +19,7 @@ class NetworkManager {
         self.resourceURL = resourceURL
     }
     
-    func getWeather(completion: @escaping(Result<Weather, WeatherError>) -> Void) {
+    func fetchWeather(completion: @escaping(Result<Weather, WeatherError>) -> Void) {
         let dataTask = URLSession.shared.dataTask(with: resourceURL) { data, _, _ in
             guard let jsonData = data else {
                 completion(.failure(.noDataAvailable))
@@ -35,4 +36,5 @@ class NetworkManager {
         }
         dataTask.resume()
     }
+    
 }
