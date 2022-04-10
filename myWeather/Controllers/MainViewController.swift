@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreLocation
 
 class MainViewController: UIViewController {
     
@@ -17,7 +18,8 @@ class MainViewController: UIViewController {
     static private let storyboardName = "Main"
     static private let identifier = "mainViewController"
     
-    private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    private let userLocations = UserLocations()
+//    private let locationManager = CLLocationManager()
     
     private lazy var detailsVC: DetailsViewController = {
         let storyboard = UIStoryboard(name: MainViewController.storyboardName, bundle: nil)
@@ -48,21 +50,24 @@ class MainViewController: UIViewController {
         updateView()
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
         setupView()
     }
     
-//    private func getLocationsNames() {
-//        do {
-//            MyLocations.locationNames = try context.fetch(Locations.fetchRequest())
-//            if MyLocations.locationNames.isEmpty {
-//
-//            }
-//        } catch {
-//            print("error")
-//        }
-//    }
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        loadCoreData()
+        setupView()
+    }
+    
+    private func loadCoreData() {
+        userLocations.getAllLocations()
+        if UserLocations.locationNames.isEmpty {
+            userLocations.addLocation(name: "Mezhova")
+            userLocations.getAllLocations()
+        }
+    }
     
     private func setupView() {
         setuplocationsPageControl()
@@ -72,7 +77,7 @@ class MainViewController: UIViewController {
     }
     
     private func setuplocationsPageControl() {
-        locationsPageControl.numberOfPages = MyLocations.locationNames.count
+        locationsPageControl.numberOfPages = UserLocations.locationNames.count
     }
     
     private func setupCurrentWeatherCollectionView() {
@@ -80,7 +85,7 @@ class MainViewController: UIViewController {
         currentWeatherCollectionView.dataSource = self
         currentWeatherCollectionView.register(CurrentWeatherCollectionViewCell.nib(), forCellWithReuseIdentifier: CurrentWeatherCollectionViewCell.identifier)
         getCurrentWeather() { locationName, weather in
-            MyLocations.weather[locationName] = weather
+            UserLocations.weather[locationName] = weather
             DispatchQueue.main.async {
                 self.currentWeatherCollectionView.reloadData()
             }
@@ -102,14 +107,15 @@ class MainViewController: UIViewController {
     }
     
     private func getCurrentWeather(completion: @escaping(String, Weather) -> Void) {
-        for locationName in MyLocations.locationNames {
-            let weatherNetworkManager = WeatherNetworkManager(locationName: locationName, forecastDays: 10)
-            weatherNetworkManager.fetchWeather(completion: { result in
+        for locationName in UserLocations.locationNames {
+            let weatherNetworkManager = WeatherNetworkManager()
+            guard let name = locationName.name else { return }
+            weatherNetworkManager.fetchWeather(forLocation: name, completion: { result in
                 switch result {
                 case .failure(_):
                     print("error")
                 case .success(let weather):
-                    completion(locationName, weather)
+                    completion(name, weather)
                 }
             })
         }
@@ -187,13 +193,13 @@ class MainViewController: UIViewController {
 extension MainViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        MyLocations.locationNames.count
+        UserLocations.locationNames.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CurrentWeatherCollectionViewCell.identifier, for: indexPath as IndexPath) as! CurrentWeatherCollectionViewCell
-        let locationName = MyLocations.locationNames[indexPath.row]
-        guard let weather = MyLocations.weather[locationName] else { return cell }
+        guard let locationName = UserLocations.locationNames[indexPath.row].name else { return cell }
+        guard let weather = UserLocations.weather[locationName] else { return cell }
         let temp = weather.current.temp_c
         let condition = weather.current.condition.text
         let location = weather.location.name
@@ -206,7 +212,29 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
 
 extension MainViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        MyLocations.displayedLocationIndex = Int(round(Float(scrollView.contentOffset.x) / Float(scrollView.frame.size.width)))
-        locationsPageControl.currentPage = MyLocations.displayedLocationIndex
+        UserLocations.displayedLocationIndex = Int(round(Float(scrollView.contentOffset.x) / Float(scrollView.frame.size.width)))
+        locationsPageControl.currentPage = UserLocations.displayedLocationIndex
     }
 }
+
+//extension MainViewController: CLLocationManagerDelegate {
+//
+//    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+//        let userLocation :CLLocation = locations[0] as CLLocation
+//
+//        let geocoder = CLGeocoder()
+//        geocoder.reverseGeocodeLocation(userLocation) { (placemarks, error) in
+//            if error != nil {
+//                print("error in reverseGeocode")
+//            }
+//            let placemark = placemarks! as [CLPlacemark]
+//            if placemark.count>0{
+//                let placemark = placemarks![0]
+//                if let locationName = placemark.locality {
+//                    self.userLocations.addLocation(name: locationName)
+//                    self.userLocations.getAllLocations()
+//                }
+//            }
+//        }
+//    }
+//}

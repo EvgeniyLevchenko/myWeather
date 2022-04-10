@@ -17,12 +17,12 @@ class HoursViewController: UIViewController {
         super.viewDidLoad()
         setupHoursTableView()
         updateHourlyTableView()
-        MyLocations.diplayedLocationChanged = updateHourlyTableView
+        UserLocations.diplayedLocationChanged = updateHourlyTableView
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
-        MyLocations.diplayedLocationChanged = updateHourlyTableView
+        UserLocations.diplayedLocationChanged = updateHourlyTableView
     }
     
     func updateHourlyTableView() {
@@ -73,10 +73,10 @@ extension HoursViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: HoursTableViewCell.identifier, for: indexPath) as! HoursTableViewCell
         let dateFormat = "y-MM-dd HH:00"
         let date = getDate(withAddedComponent: .hour, addedValue: indexPath.row, inDateFormat: dateFormat)
-        let currentLocationNameIndex = MyLocations.displayedLocationIndex
-        let currentLocationName = MyLocations.locationNames[currentLocationNameIndex]
+        let currentLocationNameIndex = UserLocations.displayedLocationIndex
+        guard let currentLocationName = UserLocations.locationNames[currentLocationNameIndex].name else { return cell }
         for i in 0...1 {
-            if let hourlyWeather = MyLocations.weather[currentLocationName]?.forecast.forecastday[i].hour {
+            if let hourlyWeather = UserLocations.weather[currentLocationName]?.forecast.forecastday[i].hour {
                 if let weatherForHour = hourlyWeather.first(where: { $0.time == date }) {
                     let hours = getHours(for: indexPath.row)
                     let conditionIcon = weatherForHour.condition.icon
@@ -87,5 +87,7 @@ extension HoursViewController: UITableViewDelegate, UITableViewDataSource {
         }
         return cell
     }
+    
+    
     
 }
