@@ -17,12 +17,12 @@ class DaysViewController: UIViewController {
         super.viewDidLoad()
         setupDaylyWeatherTableView()
         updateDaylyWeatherTableView()
-        MyLocations.diplayedLocationChanged = updateDaylyWeatherTableView
+        UserLocations.diplayedLocationChanged = updateDaylyWeatherTableView
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
-        MyLocations.diplayedLocationChanged = updateDaylyWeatherTableView
+        UserLocations.diplayedLocationChanged = updateDaylyWeatherTableView
     }
     
     private func setupDaylyWeatherTableView() {
@@ -72,9 +72,9 @@ extension DaysViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: DaysTableViewCell.identifier, for: indexPath) as! DaysTableViewCell
-        let currentLocationNameIndex = MyLocations.displayedLocationIndex
-        let currentLocationName = MyLocations.locationNames[currentLocationNameIndex]
-        guard let daylyWeather = MyLocations.weather[currentLocationName]?.forecast.forecastday[indexPath.row].day else { return cell }
+        let currentLocationNameIndex = UserLocations.displayedLocationIndex
+        guard let currentLocationName = UserLocations.locationNames[currentLocationNameIndex].name else { return cell }
+        guard let daylyWeather = UserLocations.weather[currentLocationName]?.forecast.forecastday[indexPath.row].day else { return cell }
         let dayOfWeek = getDayOfWeek(withAddedDays: indexPath.row)
         let conditionIcon = daylyWeather.condition.icon
         let minTemp = daylyWeather.mintemp_c
