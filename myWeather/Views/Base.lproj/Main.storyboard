@@ -249,7 +249,7 @@
                         <constraints>
                             <constraint firstItem="Y89-Ct-47j" firstAttribute="trailing" secondItem="kex-Vj-Xhj" secondAttribute="trailing" id="0DF-JY-QCE"/>
                             <constraint firstItem="Y89-Ct-47j" firstAttribute="leading" secondItem="kex-Vj-Xhj" secondAttribute="leading" id="0Rq-wa-dM2"/>
-                            <constraint firstItem="Y89-Ct-47j" firstAttribute="top" secondItem="kex-Vj-Xhj" secondAttribute="top" id="LqM-l2-yYN"/>
+                            <constraint firstItem="Y89-Ct-47j" firstAttribute="top" secondItem="kex-Vj-Xhj" secondAttribute="top" id="7DX-ru-orN"/>
                             <constraint firstItem="Y89-Ct-47j" firstAttribute="bottom" secondItem="kex-Vj-Xhj" secondAttribute="bottom" id="gl2-on-bBt"/>
                         </constraints>
                     </view>
@@ -267,7 +267,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jgR-WU-YDC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2892.753623188406" y="87.723214285714278"/>
+            <point key="canvasLocation" x="2926" y="88"/>
         </scene>
         <!--Search Results Table View Controller-->
         <scene sceneID="KJ9-cX-vH3">
@@ -307,26 +307,53 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Iyb-vq-5fR">
-                                <rect key="frame" x="0.0" y="44" width="414" height="769"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
                             </mapView>
+                            <navigationBar contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="arE-uS-Ri1">
+                                <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                                <items>
+                                    <navigationItem title="Map" id="tdt-Sa-dhi"/>
+                                </items>
+                            </navigationBar>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x8A-08-SuD">
+                                <rect key="frame" x="374" y="437" width="20" height="22"/>
+                                <state key="normal" image="greaterthan.circle.fill" catalog="system"/>
+                                <connections>
+                                    <action selector="rightChangeLocationButtonTapped:" destination="iMe-CP-DvH" eventType="touchUpInside" id="uGE-bV-v1z"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2M2-RY-3gg">
+                                <rect key="frame" x="20" y="437" width="20" height="22"/>
+                                <state key="normal" image="lessthan.circle.fill" catalog="system"/>
+                                <connections>
+                                    <action selector="leftChangeLocationButtonTapped:" destination="iMe-CP-DvH" eventType="touchUpInside" id="IIY-65-GhN"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="ogK-FS-aZf"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="Iyb-vq-5fR" firstAttribute="top" secondItem="arE-uS-Ri1" secondAttribute="bottom" id="Kax-MY-CDe"/>
+                            <constraint firstItem="ogK-FS-aZf" firstAttribute="trailing" secondItem="x8A-08-SuD" secondAttribute="trailing" constant="20" id="Okr-bK-Zym"/>
+                            <constraint firstItem="2M2-RY-3gg" firstAttribute="centerY" secondItem="S7g-h3-xya" secondAttribute="centerY" id="PH2-8v-Eby"/>
+                            <constraint firstItem="arE-uS-Ri1" firstAttribute="leading" secondItem="ogK-FS-aZf" secondAttribute="leading" id="VSm-ud-cym"/>
+                            <constraint firstItem="arE-uS-Ri1" firstAttribute="top" secondItem="ogK-FS-aZf" secondAttribute="top" id="bL8-OX-nhw"/>
+                            <constraint firstItem="2M2-RY-3gg" firstAttribute="leading" secondItem="ogK-FS-aZf" secondAttribute="leading" constant="20" id="bik-1u-r4O"/>
                             <constraint firstItem="ogK-FS-aZf" firstAttribute="bottom" secondItem="Iyb-vq-5fR" secondAttribute="bottom" id="dUd-6w-pzx"/>
                             <constraint firstItem="Iyb-vq-5fR" firstAttribute="leading" secondItem="ogK-FS-aZf" secondAttribute="leading" id="g67-Ny-8AI"/>
-                            <constraint firstItem="Iyb-vq-5fR" firstAttribute="top" secondItem="ogK-FS-aZf" secondAttribute="top" id="j9Y-CK-02J"/>
+                            <constraint firstItem="arE-uS-Ri1" firstAttribute="trailing" secondItem="ogK-FS-aZf" secondAttribute="trailing" id="jmX-FK-r5x"/>
                             <constraint firstItem="ogK-FS-aZf" firstAttribute="trailing" secondItem="Iyb-vq-5fR" secondAttribute="trailing" id="kMU-gB-lKs"/>
+                            <constraint firstItem="x8A-08-SuD" firstAttribute="centerY" secondItem="S7g-h3-xya" secondAttribute="centerY" id="oes-FF-Jkc"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Map" image="map.fill" catalog="system" id="R3U-oS-Rbb"/>
                     <connections>
-                        <outlet property="mapView" destination="Iyb-vq-5fR" id="96Z-Yf-kXV"/>
+                        <outlet property="mapView" destination="Iyb-vq-5fR" id="HCU-Cn-p0O"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mHU-rh-pA7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="896" y="86"/>
+            <point key="canvasLocation" x="895.6521739130435" y="85.714285714285708"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="7Bt-VC-HtO">
@@ -439,6 +466,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="greaterthan.circle.fill" catalog="system" width="128" height="121"/>
+        <image name="lessthan.circle.fill" catalog="system" width="128" height="121"/>
         <image name="location.fill" catalog="system" width="128" height="121"/>
         <image name="map.fill" catalog="system" width="128" height="110"/>
         <image name="thermometer" catalog="system" width="93" height="128"/>

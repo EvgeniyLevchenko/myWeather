@@ -9,8 +9,8 @@ import UIKit
 import CoreLocation
 
 class UserLocations {
-//    static var locationNames = ["Mezhova", "Berlin", "London", "Prague"]
     
+    static var locationNames = [CoreLocation]()
     static var weather: [String : Weather] = [:]
     
     static var displayedLocationIndex: Int {
@@ -33,7 +33,6 @@ class UserLocations {
     static var diplayedLocationChanged: (() -> Void)?
     
     private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    static var locationNames = [CoreLocation]()
     
     func getAllLocations() {
         do {

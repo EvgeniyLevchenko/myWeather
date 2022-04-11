@@ -46,7 +46,7 @@
 		4BDDCDB527A9E63500545A35 /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDDCDB427A9E63500545A35 /* DetailsViewController.swift */; };
 		4BDDCDB727A9E70500545A35 /* HoursViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDDCDB627A9E70500545A35 /* HoursViewController.swift */; };
 		4BDDCDB927A9E71700545A35 /* DaysViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDDCDB827A9E71700545A35 /* DaysViewController.swift */; };
-		4BDE13972803081700A6DD5C /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDE13962803081700A6DD5C /* MapViewController.swift */; };
+		4BDE139928030B8900A6DD5C /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDE139828030B8900A6DD5C /* MapViewController.swift */; };
 		4BE0604B27B41513006E667F /* UserLocations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE0604A27B41513006E667F /* UserLocations.swift */; };
 /* End PBXBuildFile section */
 
@@ -92,7 +92,7 @@
 		4BDDCDB427A9E63500545A35 /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
 		4BDDCDB627A9E70500545A35 /* HoursViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoursViewController.swift; sourceTree = "<group>"; };
 		4BDDCDB827A9E71700545A35 /* DaysViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaysViewController.swift; sourceTree = "<group>"; };
-		4BDE13962803081700A6DD5C /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		4BDE139828030B8900A6DD5C /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		4BE0604A27B41513006E667F /* UserLocations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLocations.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -163,7 +163,7 @@
 				4BDDCDB827A9E71700545A35 /* DaysViewController.swift */,
 				4BB3F3E327DE0A020063F951 /* UserLocationsViewController.swift */,
 				4B0988F127F9C67100EF5D3F /* SearchResultsTableViewController.swift */,
-				4BDE13962803081700A6DD5C /* MapViewController.swift */,
+				4BDE139828030B8900A6DD5C /* MapViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -327,7 +327,7 @@
 				4BABE03C27ECF69D00E88AA1 /* SearchLocation.swift in Sources */,
 				4BB3B931279AF12E0039699A /* SceneDelegate.swift in Sources */,
 				4B0988F227F9C67100EF5D3F /* SearchResultsTableViewController.swift in Sources */,
-				4BDE13972803081700A6DD5C /* MapViewController.swift in Sources */,
+				4BDE139928030B8900A6DD5C /* MapViewController.swift in Sources */,
 				4BDDCDAE27A9969500545A35 /* Condition.swift in Sources */,
 				4BDDCDB027A9986000545A35 /* WeatherError.swift in Sources */,
 				4BDDCDB227A998F200545A35 /* WeatherNetworkManager.swift in Sources */,
