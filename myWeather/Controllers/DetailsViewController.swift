@@ -104,13 +104,13 @@ extension DetailsViewController: UITableViewDelegate, UITableViewDataSource {
             cell.configure(imageSystemName: imageSystemName, weatherElementName: weatherElementName, weatherElementInfo: precipitationInfo)
         case 3:
             guard let pressure = UserLocations.weather[currentLocationName]?.current.pressure_mb else { break }
-            let pressureInfo = "\(pressure) mm"
+            let pressureInfo = "\(Int(pressure)) mm"
             let imageSystemName = "arrow.down"
             let weatherElementName = "PRESSURE"
             cell.configure(imageSystemName: imageSystemName, weatherElementName: weatherElementName, weatherElementInfo: pressureInfo)
         case 4:
             guard let visibility = UserLocations.weather[currentLocationName]?.current.vis_km else { break }
-            let visibilityInfo = "\(visibility) km"
+            let visibilityInfo = "\(Int(round(visibility))) km"
             let imageSystemName = "eye"
             let weatherElementName = "VISIBILITY"
             cell.configure(imageSystemName: imageSystemName, weatherElementName: weatherElementName, weatherElementInfo: visibilityInfo)

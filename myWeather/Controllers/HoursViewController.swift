@@ -36,9 +36,31 @@ class HoursViewController: UIViewController {
         hourlyWeatherTableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: hourlyWeatherTableView.frame.size.width, height: 1))
     }
     
-    private func getDate(withAddedComponent component: Calendar.Component, addedValue: Int, inDateFormat format: String) -> String? {
-        let currentDate = Date()
+    private func getCurrentDate() -> Date? {
+        
+        let currentLocationNameIndex = UserLocations.displayedLocationIndex
+        
+        guard let currentLocationName = UserLocations.locationNames[currentLocationNameIndex].name else {
+            return nil
+        }
+        guard let localTime = UserLocations.weather[currentLocationName]?.location.localtime else {
+            return nil
+        }
+        
         let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "y-MM-dd HH:mm"
+        if let currentDate = dateFormatter.date(from: localTime) {
+            return currentDate
+        } else {
+            return nil
+        }
+    }
+    
+    private func getDate(withAddedComponent component: Calendar.Component, addedValue: Int, inDateFormat format: String) -> String? {
+        let dateFormatter = DateFormatter()
+        guard let currentDate = getCurrentDate() else {
+            return nil
+        }
         if let nextDate = Calendar.current.date(byAdding: component, value: addedValue, to: currentDate) {
             dateFormatter.dateFormat = format
             let dateToString = dateFormatter.string(from: nextDate)
@@ -60,7 +82,6 @@ class HoursViewController: UIViewController {
             }
         }
     }
-    
 }
 
 extension HoursViewController: UITableViewDelegate, UITableViewDataSource {
@@ -87,7 +108,4 @@ extension HoursViewController: UITableViewDelegate, UITableViewDataSource {
         }
         return cell
     }
-    
-    
-    
 }

@@ -19,7 +19,6 @@ class MainViewController: UIViewController {
     static private let identifier = "mainViewController"
     
     private let userLocations = UserLocations()
-//    private let locationManager = CLLocationManager()
     
     private lazy var detailsVC: DetailsViewController = {
         let storyboard = UIStoryboard(name: MainViewController.storyboardName, bundle: nil)
@@ -47,18 +46,18 @@ class MainViewController: UIViewController {
     }
     
     @IBAction private func segmentValueChanged(_ sender: UISegmentedControl) {
-        updateView()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(true)
-        setupView()
+        updateContainerView()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         loadCoreData()
         setupView()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        updateView()
     }
     
     private func loadCoreData() {
@@ -70,10 +69,10 @@ class MainViewController: UIViewController {
     }
     
     private func setupView() {
-        setuplocationsPageControl()
         setupCurrentWeatherCollectionView()
         setupSegmentedControl()
-        updateView()
+        setuplocationsPageControl()
+        updateContainerView()
     }
     
     private func setuplocationsPageControl() {
@@ -121,7 +120,7 @@ class MainViewController: UIViewController {
         }
     }
     
-    private func updateView() {
+    private func updateContainerView() {
         let selectedSegment = weatherSegmentedControl.selectedSegmentIndex
         if let segment = Segment(rawValue: selectedSegment) {
             switch segment {
@@ -188,6 +187,13 @@ class MainViewController: UIViewController {
         viewController.removeFromParent()
     }
     
+    private func updateView() {
+        setuplocationsPageControl()
+        DispatchQueue.main.async {
+            self.currentWeatherCollectionView.reloadData()
+        }
+        updateContainerView()
+    }
 }
 
 extension MainViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -216,25 +222,3 @@ extension MainViewController: UIScrollViewDelegate {
         locationsPageControl.currentPage = UserLocations.displayedLocationIndex
     }
 }
-
-//extension MainViewController: CLLocationManagerDelegate {
-//
-//    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-//        let userLocation :CLLocation = locations[0] as CLLocation
-//
-//        let geocoder = CLGeocoder()
-//        geocoder.reverseGeocodeLocation(userLocation) { (placemarks, error) in
-//            if error != nil {
-//                print("error in reverseGeocode")
-//            }
-//            let placemark = placemarks! as [CLPlacemark]
-//            if placemark.count>0{
-//                let placemark = placemarks![0]
-//                if let locationName = placemark.locality {
-//                    self.userLocations.addLocation(name: locationName)
-//                    self.userLocations.getAllLocations()
-//                }
-//            }
-//        }
-//    }
-//}
